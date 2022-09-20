@@ -7,7 +7,7 @@ Scrapping-site à pour but de délivrer une interface web avec système de conne
  - Django
 
 # Installation 
-  - git clone url...
+  - git clone https://github.com/Lucas-dev-974/Django-scraaping-site.git
 
 # Commencer 
  - Dans un terminal se positionner à la racine du projet, puis exécuter: 'python manage.py runserver'
