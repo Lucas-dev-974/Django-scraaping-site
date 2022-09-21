@@ -1,0 +1,30 @@
+from django.db import models
+
+class User(models.Model):
+    name     = models.CharField(max_length=75)
+    email    = models.EmailField(max_length=75, unique=True)
+    password = models.CharField(max_length=250)
+
+
+class Target_Site(models.Model):
+    name     = models.CharField(max_length=75)
+    site_url = models.CharField(max_length=100)
+
+
+class Threads(models.Model):
+    target_id = models.ForeignKey(Target_Site, on_delete=models.CASCADE)
+    title     = models.CharField(max_length=100)
+    author    = models.CharField(max_length=75)
+    content   = models.TextField()
+    publication_date = models.DateTimeField()
+    scrapped_time    = models.DateTimeField()
+    number_of_replys = models.IntegerField()
+
+class Threads_Replys(models.Model):
+    thread  = models.ForeignKey(Threads, on_delete=models.CASCADE)
+    title   = models.CharField(max_length=100)
+    author  = models.CharField(max_length=75)
+    content = models.TextField()
+    publication_date = models.DateTimeField()
+    scrapped_time    = models.DateTimeField()
+    number_of_replys = models.IntegerField()
