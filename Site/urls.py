@@ -1,10 +1,14 @@
 from django.contrib import admin
-from django.urls import path
-from Site import views # Dois être importer manuellement en fonction de l'app
+from django.urls import path, include
+from Site.viewpackage import *
 
 urlpatterns = [
-    path('',         views.HomePage, name = 'home'),
-    # path('contact',  views.contact, name="contact"),
-    # path('login',    views.login, name='login'),
-    # path('register', views.registration, name='register'),
+    path('',         HomePage,   name = 'home'),
+    path('login',    LoginPage,  name='login'),
+    path('register', RegisterPage, name='register'),
+    path('tg-site/',  include([
+        path('',         TGSitePage, name='target-site'),
+        path('history',  TGS_HistoryPage),
+        path('graph',    TGS_GraphPage)
+    ])),
 ]
