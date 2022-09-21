@@ -9,6 +9,6 @@ urlpatterns = [
     path('tg-site/',  include([
         path('',         TGSitePage, name='target-site'),
         path('history',  TGS_HistoryPage),
-        path('graph',    TGS_GraphPage)
+        path('graph',    TGS_GraphPage) 
     ])),
 ]
