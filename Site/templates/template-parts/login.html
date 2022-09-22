@@ -2,4 +2,13 @@
 
 {% block content %}
     Login page in built
+    {{errors}}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+
+        <input type="submit" value="S'enregistrer">
+    </form>
+
+    {{ user }}
 {% endblock content %}
