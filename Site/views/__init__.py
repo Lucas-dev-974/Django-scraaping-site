@@ -1,3 +1,3 @@
 from .views import *
-from .AuthViews import *
+from .Authentication import *
 from .TargetSite import *
