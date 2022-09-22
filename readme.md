@@ -10,4 +10,16 @@ Scrapping-site à pour but de délivrer une interface web avec système de conne
   - git clone https://github.com/Lucas-dev-974/Django-scraaping-site.git
 
 # Commencer 
- - Dans un terminal se positionner à la racine du projet, puis exécuter: 'python manage.py runserver'
+Dans un terminal se positionner à la racine du projet, puis exécuter les commandes suivante: 
+
+    - .venv/Scripts/Activate.ps1
+    - python manage.py migrate Site
+    - python manage.py runserver
+
+## Légère modification de l'architecture Django
+### Views
+Au niveaux de l'app "Site" le fichier "views.py" à été déplacer dans le dossier "views" qui lui vas contenir toutes les méthods views pour l'app "Site" par exemple: AuthentificationViews - TargetSiteViews...
+ 
+### Formulaires
+Retrouver tous les "Formulaire Django" dans le dossier "Site/Formulaires"
+
