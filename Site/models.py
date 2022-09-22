@@ -1,10 +1,5 @@
 from django.db import models
 
-class User(models.Model):
-    name     = models.CharField(max_length=75)
-    email    = models.EmailField(max_length=75, unique=True)
-    password = models.CharField(max_length=250)
-
 
 class Target_Site(models.Model):
     name     = models.CharField(max_length=75)
