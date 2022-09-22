@@ -82,3 +82,38 @@ Comme il est toujours compliqué de partir de rien, Django vous propose une base
     Lorsque vous créé des migration à partir des models, toute vos classes déclarer en tant que models seront prise en compte pour la création des migrations.
 
 ## Les Formulaire
+Les formulaire sont des outils très puissant qui permet de:
+
+    - Créer des champs à completer (HTML)
+    - Vérifier si les champs completer son bien les champs attendu (BACK-END)
+    - Créer un formulaire en relation avec une entité de la BDD    (BACK-END)
+        - Ce qui permet de vérifier si les champs entrés sont correspondants avec ceux attendu en BDD
+        - D'enregistrer l'entité en BDD 
+
+### Création d'un formulaire
+Dans le dossier de votre app ici 'Site' créer un dossier 'formulaires' et à l'intérieur créer un fichier AuthenticationForm.py
+
+Créons un formulaire d'enregistrement utilisateur.
+
+Premierement il faux définir la class de son form extendu de django.forms.ModelForm
+
+ensuite on y renseigne les champs du formulaire ici: email, username, password
+![formulaire!](medias/formulaire.jpg)
+
+
+### Relation form & model
+Pour définir un formulaire en tant que formulaire de d'insertion en BDD il suffit de rajouter la 'class Meta'
+
+et d'y définir le model sur lequel pointer en BDD pour la comparaison des champs ainsi que les champs à récuperer venant du formulaire
+
+![form_model_relation!](medias/form_relation.jpg)
+
+
+### Instancier le formulaire (backend to frontend)
+Dans le views de votre page ou afficher le formulaire instancier le, en fonction du type de requête faite vos operation avec le formulaire et enfin passer le en paramètres de rendus:
+
+![form_instance_to_front!](medias/form_instanciation.jpg)
+
+Au niveaux du frontend pour afficher les entrer du formulaire:
+
+![form_frontend_display!](medias/form_affi.jpg)
