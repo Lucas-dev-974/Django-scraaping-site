@@ -20,13 +20,13 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         {{add_TGSite_form.as_p}}
-                        <button type="submit">Ajouter</button>
+
+                        <div class="modal-footer">
+                            <button type="submit" name='add_tgsite' class="btn btn-primary">Ajouter le site</button>
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -36,5 +36,10 @@
 
    <a href="/logout">DECONNEXION</a>
 
-   
+{% for site in tgsites %}
+    {{site.name}}
+    
+{% endfor %}
+{{tgsites.has_next}}
+
 {% endblock content %}
