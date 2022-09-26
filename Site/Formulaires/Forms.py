@@ -26,6 +26,7 @@ class ModelTargetSiteForm(forms.ModelForm):
         
         # Manage custom error here
         self.fields['url_to_scrapp'].error_messages['invalid'] = "Veuillez entrer une URL valide !"
+        self.fields['name'].error_messages['unique'] = "Un site cible à déjà ce nom, veuillez en saisir un autre !"
 
     class Meta:
         model = Target_Site
