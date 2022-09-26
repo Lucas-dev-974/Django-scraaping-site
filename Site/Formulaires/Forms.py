@@ -20,6 +20,13 @@ class ModelTargetSiteForm(forms.ModelForm):
         )
     )
 
+    # Overide
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Manage custom error here
+        self.fields['url_to_scrapp'].error_messages['invalid'] = "Veuillez entrer une URL valide !"
+
     class Meta:
         model = Target_Site
         fields = ['name', 'url_to_scrapp']
@@ -35,7 +42,7 @@ class TargetSiteForm(forms.Form):
     )
     
     url_to_scrapp = forms.CharField(max_length=70, 
-        widget= forms.TextInput(
+        widget= forms.URLInput(
             attrs={
                 'class': 'form-control'
             }
