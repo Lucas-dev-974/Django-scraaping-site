@@ -1,14 +1,12 @@
 {% extends '../index.html' %}
 
 {% block content %}
-    Login page in built
-    {{errors}}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ login_form.as_p }}
+    <div class="container full-height">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ login_form.as_p }}
 
-        <input type="submit" value="S'enregistrer">
-    </form>
-
-    {{ user }}
+            <input type="submit" value="S'enregistrer">
+        </form>
+    </div>
 {% endblock content %}
