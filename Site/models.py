@@ -12,7 +12,7 @@ class Threads(models.Model):
     author    = models.CharField(max_length=75)
     content   = models.TextField()
     publication_date = models.DateTimeField()
-    scrapped_time    = models.DateTimeField()
+    scrapped_date    = models.DateTimeField()
     number_of_replys = models.IntegerField()
 
 class Threads_Replys(models.Model):
@@ -21,5 +21,5 @@ class Threads_Replys(models.Model):
     author  = models.CharField(max_length=75)
     content = models.TextField()
     publication_date = models.DateTimeField()
-    scrapped_time    = models.DateTimeField()
+    scrapped_date    = models.DateTimeField()
     number_of_replys = models.IntegerField()
