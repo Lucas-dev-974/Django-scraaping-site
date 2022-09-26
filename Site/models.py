@@ -3,7 +3,7 @@ from django.db import models
 
 class Target_Site(models.Model):
     name     = models.CharField(max_length=75)
-    site_url = models.CharField(max_length=100)
+    url_to_scrapp = models.CharField(max_length=100)
 
 
 class Threads(models.Model):
