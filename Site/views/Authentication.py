@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, logout, login
 # Create your views here.
 
 def Login(request):
-    errors = {}
+    errors = []
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
 
@@ -15,18 +15,22 @@ def Login(request):
             username = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
             user = authenticate(username = username, password = password)
-            login_status = login(request=request, user=user)
-
-            print(login_status)
-
+            
             if user is not None:
-                return redirect('/', {'user': user})
+                login(request=request, user=user)
+                return redirect('/private', {'user': user})
+            else:
+                errors.append('Vos idientifiant sont incorrectes !')
         else:
             errors = login_form.errors.as_json()
     else:
         login_form = LoginForm()
 
-    return render(request, 'template-parts/login.html', {'login_form': login_form, 'errors': errors})
+    return render(request, 'template-parts/login.html', {'login_form': login_form, 'notif': {
+        'on': len(errors) > 0,
+        'type': 'warning',
+        'messages': errors
+    }})
 
 def Register(request):
     errors  = {}
@@ -58,4 +62,11 @@ def Register(request):
 
 
 def Logout(request):
-    logout()
+    logout(request)
+    return redirect('/', {
+        'notif': {
+            'on': True,
+            'type': 'info',
+            'message': 'Vous avez été déconnecter avec succès'
+        }
+    })
