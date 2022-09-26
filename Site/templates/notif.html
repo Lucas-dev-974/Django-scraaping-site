@@ -1,0 +1,19 @@
+{% if notif.on %}
+    <div class="alert alert-dismissible fade show
+        {% if notif.type == 'warning' %}
+            alert-warning
+        {% elif notif.type == 'info' %}
+            alert-primary
+        {% endif %}  " 
+        role="alert"
+    >
+        {% if notif.messages %}
+            {% for msg in notif.messages %}
+                {{msg}}
+            {% endfor %}
+        {% elif notif.message %}
+            {{ notif.message }}
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
