@@ -31,7 +31,7 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         # Manage custom error here
-        self.fields['username'].error_mesgsages['unique'] = "Ce nom d'utilisateur est déjà pris"
+        self.fields['username'].error_messages['unique'] = "Ce nom d'utilisateur est déjà pris"
         self.fields['email'].error_messages['invalid']   = "Veuillez entrer un mail valide"
 
     # Define form relation with database table
