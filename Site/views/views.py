@@ -4,13 +4,13 @@ from django.shortcuts import render
 def Home(request):
     scraps = [
         {
-            'site name': 'Site a scrapper 1',
+            'site_name': 'Site a scrapper 1',
             'title': 'Thread 1',
             'state': 'success',
             'content': '15 letters max of the post (thread) content'
         },
         {
-            'site name': 'Site a scrapper 1',
+            'site_name': 'Site a scrapper 1',
             'title': 'Thread 2',
             'state': 'success',
             'content': '15 letters max of the post (thread) content'
