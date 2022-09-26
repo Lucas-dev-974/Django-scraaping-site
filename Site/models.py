@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Target_Site(models.Model):
-    name     = models.CharField(max_length=75)
-    url_to_scrapp = models.CharField(max_length=100)
+    name     = models.CharField(max_length=75, unique=True)
+    url_to_scrapp = models.URLField(max_length=100)
 
 
 class Threads(models.Model):
