@@ -1,38 +1,46 @@
-import json
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from Site.Formulaires import *
 from Site.models import Target_Site
 from Site.Formulaires import *
+from Site.utils import *
 
 @login_required
 def private(request):   
     errors = []
     if request.method == 'POST':
-        form = ModelTargetSiteForm(request.POST)
-        if(form.is_valid()):
-            form.save()
-
-        # Manage errors from formulaire"
-        else:
-            errors_asjson     = form.errors.as_json()
-            errors_jsonloaded = json.loads(errors_asjson)
-            for error in errors_jsonloaded:
-                if len(errors_jsonloaded) > 1:
-                    print('plusieur erreur')
-                else:
-                    error_msg = errors_jsonloaded[error][0]['message']
-                    errors.append(error_msg)
+        if 'add_tgsite' in request.POST:
+            form = ModelTargetSiteForm(request.POST)
+            if(form.is_valid()):
+                form.save()
+            # Manage errors from formulaire"
+            else:
+                errors += checkFormError(form=form)     
 
         
     else:
         form = ModelTargetSiteForm()
 
-    return render(request, 'template-parts/private.html', {'add_TGSite_form': form, 'notif': {
-        'on': len(errors) > 0,
-        'type': 'warning',
-        'messages': errors
-    }})
+    target_sites = Target_Site.objects.all()
+    paginator    = Paginator(target_sites, 10)
+
+    if 'page' in request.GET:
+        on_page = request.GET.get('page')
+    else: on_page = 0
+
+    tgsites_page = paginator.get_page(on_page)
+    #paginator = request.get.page
+
+    return render(request, 'template-parts/private.html', {
+        'add_TGSite_form': form, 
+        'notif': {
+            'on': len(errors) > 0,
+            'type': 'warning',
+            'messages': errors
+        },
+        'tgsites': tgsites_page
+    })
 
 
 @login_required
