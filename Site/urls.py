@@ -7,7 +7,7 @@ urlpatterns = [
     path('login',    Login,  name='login'),
     path('register', Register, name='register'),
     path('logout',    Logout,  name='logout'),
-    path('private',  include([
+    path('private/',  include([
         path('',    private, name='private'), 
         path('tg-site',  TGSite, name='target-site'),
         path('history',  TGS_History),
