@@ -1,4 +1,3 @@
-import os
 from django.shortcuts import render
 from Site.Formulaires import *
 from django.shortcuts import redirect
