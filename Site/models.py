@@ -15,9 +15,15 @@ class Threads(models.Model):
     scrapped_date    = models.DateTimeField()
     number_of_replys = models.IntegerField()
 
+    def replys(self):
+        replys = Threads_Replys.objects.filter(thread_id = self.id)
+        return replys
+
+
 class Threads_Replys(models.Model):
     thread  = models.ForeignKey(Threads, on_delete=models.CASCADE)
     author  = models.CharField(max_length=75)
     content = models.TextField()
     publication_date = models.DateTimeField()
     scrapped_date    = models.DateTimeField()
+

@@ -44,8 +44,19 @@ def private(request):
 
 
 @login_required
-def TGSite(request):
-    #if request.method == 'POST':
+def TGSite(request, id):
+    threads = Threads.objects.filter(target_id_id = id)
+
+    iteration = 0
+
+    for thread in threads:
+        thread
+        threads[iteration]['replys'] = thread.replys()
+
+        iteration += 1
+        # thread['replys'] = thread.replys()
+
+    print(threads)
     print('okok')
     return render(request, 'template-parts/TargetSite.html')
 
