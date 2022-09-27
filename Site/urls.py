@@ -9,7 +9,7 @@ urlpatterns = [
     path('logout',    Logout,  name='logout'),
     path('private/',  include([
         path('',    private, name='private'), 
-        path('tg-site',  TGSite, name='target-site'),
+        path('tg-site/<int:id>',  TGSite, name='target-site'),
         path('history',  TGS_History),
         path('graph',    TGS_Graph) 
     ])),
