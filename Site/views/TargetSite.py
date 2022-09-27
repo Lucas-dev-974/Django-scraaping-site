@@ -51,7 +51,23 @@ def TGSite(request):
 
 @login_required
 def TGS_History(request):
-    return render(request, 'template-parts/history.html')
+    scrapHist = [
+        {
+            'date': '10/05/1990',
+            'nbTh': '1',
+            'state': 'success',
+            'nbCom': '15'
+        },
+        {
+            'date': '01/01/2000',
+            'nbTh': '10',
+            'state': 'success',
+            'nbCom': '50'
+        },
+    ]
+    return render(request, 'template-parts/history.html', {
+        'scrap_history': scrapHist
+    })
 
 @login_required 
 def TGS_Graph(request):

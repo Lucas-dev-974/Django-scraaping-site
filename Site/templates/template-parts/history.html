@@ -1,5 +1,37 @@
 {% extends '../index.html' %}
 
 {% block content %}
-    History page in built
+
+{{ scrap_history  }}    
+{% include './navBar-deco.html' %}
+
+
+
+<article class="d-flex justify-content-center mt-3">
+    <ul class="list-group mx-1 w-25">
+        <li class="list-group-item active bg-dark border-light" aria-current="true">DATE</li>
+        {% for scrap in scrap_history %}
+            <li class="list-group-item">{{scrap.date}}</li>
+        {% endfor %}
+    </ul>
+    <ul class="list-group w-25 mx-1">
+        <li class="list-group-item active bg-dark border-light" aria-current="true">ETAT</li>
+        {% for scrap in scrap_history %}
+            <li class="list-group-item">{{scrap.state}}</li>
+        {% endfor %}
+    </ul>
+    <ul class="list-group w-25 mx-1">
+        <li class="list-group-item active bg-dark border-light" aria-current="true">THREADS</li>
+        {% for scrap in scrap_history %}
+            <li class="list-group-item">{{scrap.nbTh}}</li>
+        {% endfor %}
+    </ul>
+    <ul class="list-group w-25 mx-1">
+        <li class="list-group-item active bg-dark border-light" aria-current="true">COMMENTAIRES</li>
+        {% for scrap in scrap_history %}
+            <li class="list-group-item">{{scrap.nbCom}}</li>
+        {% endfor %}
+    </ul>
+      
+</article>
 {% endblock content %}
