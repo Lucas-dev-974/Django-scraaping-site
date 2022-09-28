@@ -1,35 +1,31 @@
 {% extends '../index.html' %}
 
 {% block content %}
-    <div class="" style="color: white;">
-        Site: {{site_name}} <br>
-        url à scrapper: {{ site_url_to_scrapp }}     
-    </div>
-
+{% include './navBar-deco.html' %}
 
     <main>
-        
-        <div class ="titre-accueil container1">
+
+        <div class ="container-fluid text-light h-100 d-flex align-items-center justify-content-center">
             <h2 class="">Nom du site scrappé</h2>
         </div>
 
-        <div class="containerP">
-            <div class = "historique container2">
-                <a href="#" id="btn1">Historique</a>
+        <div class="container">
+            <div class="row">
+                <a class = "col btn btn-outline-light w-25 py-5 m-5" href="/private/history" id="btn1">
+                    <div >Historique</div>
+                </a>
+                <a class = "col btn btn-outline-light w-25 py-5 m-5" href="/private/graph" id="btn2">
+                    <div >Graphique</div>
+                </a>
+                <div class = "w-100"></div>
+                <a class = "col btn btn-outline-light w-25 py-5 m-5" href="#"  id="btn3">
+                    <div >Relevé</div>
+                </a>
+    
+                <a class = "col btn btn-outline-light w-25 py-5 m-5" href="#" id="btn4">
+                    <div >Dernier Relevé</div>
+                </a>
             </div>
-
-            <div class = "graphique container3">
-                <a href="#" id="btn2">Graphique</a>
-            </div>
-
-            <div class = "relevé container4">
-                <a href="#" id="btn3">Eelevé</a>
-            </div>
-
-            <div class = "dernier-relevé container5">
-            <a href="#" id="btn4">Dernier Relevé</a>
-            </div>
-
         </div>
 
     </main>
