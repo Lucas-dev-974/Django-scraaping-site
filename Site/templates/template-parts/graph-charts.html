@@ -10,6 +10,9 @@
     <button type="button" class="btn btn-outline-light mx-auto">Suivant ></button>
 </div>
 
+<button id="btn-1">
+    teste
+</button>
 <script>
 
     async function getGraphData(url=null, method='POST', params=null, csrfToken=false){
@@ -17,9 +20,7 @@
 
         if(params != null){
             try{
-                paramsToJson = JSON.stringify(params)
-                console.log(paramsToJson)
-
+                checker = JSON.stringify(params)
                 Object.entries(params).forEach(param => {
                     data.append(param[0], param[1])
                 });
@@ -36,16 +37,27 @@
             method: method ?? method,
             body: data,
         })
-
+        
         const JsonResponse = await request.json()
-        return JsonResponse
+        console.log(JsonResponse);
+        // return request
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+    document.addEventListener('DOMContentLoaded', async () => {
+        let response = getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
             'year': '2022',
             'page': '0'
         }, '{{ csrf_token }}')
+
+
+        const btn = document.getElementById('btn-1')
+        btn.addEventListener('click', ()  => {
+            const response =  getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+                'year': '2022',
+                'page': '0'
+            }, '{{ csrf_token }}')
+        })
+
     })
 
 </script>
