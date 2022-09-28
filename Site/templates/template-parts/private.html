@@ -23,11 +23,16 @@
 
 
     <!-- Button trigger modal -->
+    <div class ="h-100 d-flex align-items-center justify-content-center">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Ajouter un site à scraper
     </button>
+    </div> 
+
 
     <!-- Modal -->
+
+   
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -49,7 +54,6 @@
             </div>
         </div>
     </div>
-
 
 {% for site in tgsites %}
     {{site.name}}
