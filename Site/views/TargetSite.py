@@ -70,24 +70,28 @@ def TGSite(request, id):
         'site_url_to_scrapp':  tg_site.url_to_scrapp
     })
 
+
+
 @login_required
 def TGS_History(request):
-    scrapHist = [
-        {
-            'date': '10/05/1990',
-            'nbTh': '1',
-            'state': 'success',
-            'nbCom': '15'
-        },
-        {
-            'date': '01/01/2000',
-            'nbTh': '10',
-            'state': 'success',
-            'nbCom': '50'
-        },
-    ]
+    last_scrapped_threads = Threads.objects.all().order_by('scrapped_date')
+    threads = []
+
+    for thread in last_scrapped_threads:
+        threads.append({
+            'id': thread.id,
+            'author': thread.author,
+            'title': thread.title,
+            'publication_date': thread.publication_date,
+            'scrapped_date': thread.scrapped_date,
+            'replys': thread.replys(),
+            'number_of_replys': len(thread.replys()),
+            'status': 'success'
+        })
+
+
     return render(request, 'template-parts/history.html', {
-        'scrap_history': scrapHist
+        'scrap_history': threads,
     })
 
 @login_required 
