@@ -33,7 +33,11 @@ data: data,
   options: {
     scales: {
       y: {
-        ticks: { color: 'rgba(255, 255, 255,1)', beginAtZero: true }
+        ticks: { color: 'rgba(255, 255, 255,1)', beginAtZero: true },
+        grid:{
+            drawBorder: false,
+            color: 'rgba(255, 255, 255,0.5)'
+        }
       },
       x: {
         ticks: { color: 'rgba(255, 255, 255,1)', beginAtZero: true }
