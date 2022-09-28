@@ -42,7 +42,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        getHistoryData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+        getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
             'year': '2022',
             'page': '0'
         }, '{{ csrf_token }}')
