@@ -93,3 +93,16 @@ def TGS_History(request):
 @login_required 
 def TGS_Graph(request):
     return render(request, 'template-parts/graph-charts.html')
+
+
+@login_required
+def Releve(request, siteid):
+    site = Target_Site.objects.get(pk = siteid)
+
+    return render(request, 'template-parts/scrap.html', {
+        'site': {
+            'id': site.id,
+            'name': site.name,
+            'url_to_scrapp': site.url_to_scrapp
+        }
+    })
