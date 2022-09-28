@@ -1,6 +1,4 @@
-
 {% extends '../index.html' %}
-{% load static %}
 
 {% block content %}
 {% include './navBar-deco.html' %}
@@ -12,10 +10,45 @@
     <button type="button" class="btn btn-outline-light mx-auto">Suivant ></button>
 </div>
 
+<script>
 
+    async function getGraphData(url=null, method='POST', params=null, csrfToken=false){
+        const data = new FormData()
 
-{% include './NavPrivateMenu.html' %}
+        if(params != null){
+            try{
+                paramsToJson = JSON.stringify(params)
+                console.log(paramsToJson)
 
+                Object.entries(params).forEach(param => {
+                    data.append(param[0], param[1])
+                });
+
+            }catch(error){
+                console.log(error);
+                alert('Désoler une erreur est survenue veuillez recharger la page !')
+            }
+        }   
+
+        if(csrfToken) data.append('csrfmiddlewaretoken', csrfToken)
+
+        const request = await window.fetch(url, {
+            method: method ?? method,
+            body: data,
+        })
+
+        const JsonResponse = await request.json()
+        return JsonResponse
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getHistoryData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+            'year': '2022',
+            'page': '0'
+        }, '{{ csrf_token }}')
+    })
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-<script src ="{% static 'js/graphThr.js' %}"></script>
+{% include './NavPrivateMenu.html' %}
 {% endblock content %}
