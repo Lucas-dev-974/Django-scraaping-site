@@ -9,6 +9,8 @@ from Site.utils import *
 @login_required
 def private(request):   
     errors = []
+    form = ModelTargetSiteForm()
+
     if request.method == 'POST':
         if 'add_tgsite' in request.POST:
             form = ModelTargetSiteForm(request.POST)
@@ -18,9 +20,15 @@ def private(request):
             else:
                 errors += checkFormError(form=form)     
 
-        
-    else:
-        form = ModelTargetSiteForm()
+        if 'delete_tgsite' in request.POST:
+            tgsite_id = request.POST.get('tgsite_id') 
+            try:
+                tgsite_id = int(tgsite_id)
+                tg_site = Target_Site.objects.get(pk = tgsite_id)
+                tg_site.delete()
+            except:
+                print('error l\'id n\'est pas au bon format')
+            print('delete site: ', request.POST.get('tgsite_id'))
 
     target_sites = Target_Site.objects.all()
     paginator    = Paginator(target_sites, 10)
@@ -46,19 +54,21 @@ def private(request):
 @login_required
 def TGSite(request, id):
     threads = Threads.objects.filter(target_id_id = id)
+    tg_site = Target_Site.objects.get(pk=id)
 
     iteration = 0
 
     for thread in threads:
         thread
-        threads[iteration]['replys'] = thread.replys()
+        # threads[iteration]['replys'] = thread.replys()
 
         iteration += 1
         # thread['replys'] = thread.replys()
 
-    print(threads)
-    print('okok')
-    return render(request, 'template-parts/TargetSite.html')
+    return render(request, 'template-parts/TargetSite.html', {
+        'site_name': tg_site.name,
+        'site_url_to_scrapp':  tg_site.url_to_scrapp
+    })
 
 @login_required
 def TGS_History(request):
