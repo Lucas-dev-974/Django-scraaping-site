@@ -1,3 +1,5 @@
+from calendar import month
+from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render
@@ -5,6 +7,7 @@ from Site.Formulaires import *
 from Site.models import Target_Site
 from Site.Formulaires import *
 from Site.utils import *
+from django.http import JsonResponse
 
 @login_required
 def private(request):   
@@ -92,6 +95,32 @@ def TGS_History(request):
 
     return render(request, 'template-parts/history.html', {
         'scrap_history': threads,
+    })
+
+def TGS_graph_api(request):
+
+    if request.method == 'POST':
+        if 'year' in request.POST:
+            year = request.POST.get('year')
+        else: 
+            year = date.today().year
+
+        if 'page' in request.POST:
+            if request.POST.get('page') == '2':
+                between_month = ['06', '12']
+            else:
+                between_month = ['01', '06']
+
+        else:
+            between_month = ['01', '06']
+
+        date1 = year + '-' + between_month[0] + '-01'
+        date2 = year + '-' + between_month[1] + '-01'
+
+        threads = getThreadsBetweenDate(date1, date2)
+        
+    return JsonResponse({
+        'history': threads
     })
 
 @login_required 
