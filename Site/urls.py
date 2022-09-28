@@ -11,6 +11,10 @@ urlpatterns = [
         path('',    private, name='private'), 
         path('tg-site/<int:id>',  TGSite, name='target-site'),
         path('history',  TGS_History),
-        path('graph',    TGS_Graph) 
+        path('graph',    TGS_Graph), 
+        path('relevee/', include([
+            path('<int:siteid>',    StartScrap, name='relevee'), 
+            path('scrap/start/<int:siteid>', StartScrap)
+        ]))
     ])),
 ]
