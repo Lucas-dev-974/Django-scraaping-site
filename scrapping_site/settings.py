@@ -137,6 +137,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+STATIC_ROOT = '/static/'
+
+
 LOGIN_REDIDRECT_URL = '/'
 
 # AUTHENTICATION_BACKENDS = [
