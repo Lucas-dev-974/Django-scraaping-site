@@ -36,7 +36,7 @@ def run():
 
 
 
-print("the scrapping task is finished")
+# print("the scrapping task is finished")
 """
 
 def saveThread(thread, is_reply=False):
@@ -85,11 +85,11 @@ def saveThread(thread, is_reply=False):
     # })
 
 """
-jsonThread = fn.JsonEncoder(all_threads)
+# jsonThread = fn.JsonEncoder(all_threads)
 
-decodedJsonThreadsPerPage = fn.JsonDecode(jsonThread)[0] # Get the first page
-# print(decodedJsonThreadsPerPage)
-for page in decodedJsonThreadsPerPage:
-    print('\n')
-    for thread in page:
-        saveThread(thread)
+# decodedJsonThreadsPerPage = fn.JsonDecode(jsonThread)[0] # Get the first page
+# # print(decodedJsonThreadsPerPage)
+# for page in decodedJsonThreadsPerPage:
+#     print('\n')
+#     for thread in page:
+#         saveThread(thread)
