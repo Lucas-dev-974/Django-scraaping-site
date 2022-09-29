@@ -10,9 +10,9 @@
     <button type="button" class="btn btn-outline-light mx-auto">Suivant ></button>
 </div>
 
-<button id="btn-1">
+{% comment %} <button id="btn-1">
     teste
-</button>
+</button> {% endcomment %}
 <script>
 
     async function getGraphData(url=null, method='POST', params=null, csrfToken=false){
@@ -50,13 +50,13 @@
         }, '{{ csrf_token }}')
 
 
-        const btn = document.getElementById('btn-1')
+    /*    const btn = document.getElementById('btn-1')
         btn.addEventListener('click', ()  => {
             const response =  getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
                 'year': '2022',
                 'page': '0'
             }, '{{ csrf_token }}')
-        })
+        })*/
 
     })
 
