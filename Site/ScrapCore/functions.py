@@ -18,7 +18,9 @@ def getPostsFromPage(pageContent):
     # print(pageContent)
     # On récupere tout les poste via le tag: article et la class: custom-message-tile 
     thread_results = pageContent.find_all("article", class_="custom-message-tile") #piege ici
-    print(len(thread_results))
+    #print(len(thread_results))
+
+    return thread_results
     # boucle sur les article récuperer
     iteration = 0
     # for thread in thread_results:
@@ -94,11 +96,19 @@ def getParsedauthorThreadsAndReplys(thread_title, thread_domain, thread_path):
 
 def getReplyOfThread(thread_page):
     
-    replysComponents  = thread_page.find_all(class_ = 'lia-thread-reply')
+    """replysComponents  = thread_page.find_all(class_ = 'lia-thread-reply')
+    print(len(replysComponents))"""
+    #Recupere la balise qui contient le nombre de reponse sous un post
+    replysCounter = thread_page.find(class_ ='custom-tile-replies')
+    txt = replysCounter.find('b').getText()
+    return txt
+
+    
+"""
     _replys = [] # Parsed replys
 
-    # Todo Remove Limit
-    # Limit of thread to get
+     Todo Remove Limit
+     Limit of thread to get
     blockage = len(replysComponents)
     if(blockage > 1):
         blockage = 3
@@ -115,9 +125,10 @@ def getReplyOfThread(thread_page):
             'scrapped_date': datetime.datetime.now().strftime('%x' + '-' + '%X'),
             'publication_date': pb_date
         })
-        iteration += 1
+        iteration += 1 
     
     return _replys
+"""
 
 def JsonEncoder(json_to_encode):
     return json.dumps(json_to_encode, indent=2, sort_keys=True)

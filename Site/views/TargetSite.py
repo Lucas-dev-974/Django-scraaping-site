@@ -144,11 +144,12 @@ def Releve(request, siteid):
 
 @login_required
 def Scrapper(request, siteid):
+    scraped = run()
     threads = {
-        't1': 'test',
-        't2': 'test2'
+        'nbThreads': len(scraped['y']),
+        'nbcoms': scraped['y']
     }
     test = json.dumps(threads)
 
-    return JsonResponse({'test': 'test'})
+    return JsonResponse(threads)
     

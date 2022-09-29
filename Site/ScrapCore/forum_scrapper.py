@@ -17,22 +17,39 @@ pageContent = BeautifulSoup(page.content, "html.parser")
 all_threads = []
 
 # On récupere le chemin de la page
-currentPagePath   = urlparse(URL).path
-
-
-compteur = 0
 
 def run():
+    currentPagePath   = urlparse(URL).path
+    compteur = 0
+    Posts= []
+    Coms=[]
     while  compteur != 1:
+
         threads = []
-        print('\niteration: ', compteur, ' ', currentPagePath)
+
+        #print('\niteration: ', compteur, ' ', currentPagePath)
         currentPage   = fn.getPage(domain, currentPagePath)
         
-        threads.append(fn.getPostsFromPage(currentPage)['threads'])
+        postCurrentPage = fn.getPostsFromPage(currentPage)
+        nbThreads = len(postCurrentPage)
+        #print('Nombre de threads = ',nbThreads)
+        for post in postCurrentPage:
+            Coms.append(fn.getReplyOfThread(post))
+            nbComs = Coms[len(Coms)-1]
+            #print('Nombre de reponse au thread [',len(Coms)-1,'] = ',nbComs)
+
+        threads.append(postCurrentPage)
 
         currentPagePath   = urlparse(fn.getNextPageUrl(currentPage)).path
         compteur = compteur + 1
         all_threads.append(threads)
+
+        scrap = {
+            'x': threads,
+            'y': Coms
+        }
+
+        return scrap
 
 
 
