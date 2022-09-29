@@ -132,7 +132,7 @@ def TGS_Graph(request):
 def Releve(request, siteid):
     site = Target_Site.objects.get(pk = siteid)
 
-    return render(request, 'template-parts/scrap.html', {
+    return render(request, 'template-parts/relevee.html', {
         'site': {
             'id': site.id,
             'name': site.name,

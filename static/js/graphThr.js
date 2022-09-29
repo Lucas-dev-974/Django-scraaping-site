@@ -1,3 +1,39 @@
+async function getGraphData(url=null, method='POST', params=null, csrfToken=false){
+    const data = new FormData()
+
+    if(params != null){
+        try{
+            paramsToJson = JSON.stringify(params)
+            console.log(paramsToJson)
+
+            Object.entries(params).forEach(param => {
+                data.append(param[0], param[1])
+            });
+
+        }catch(error){
+            console.log(error);
+            alert('Désoler une erreur est survenue veuillez recharger la page !')
+        }
+    }   
+
+    if(csrfToken) data.append('csrfmiddlewaretoken', csrfToken)
+
+    const request = await window.fetch(url, {
+        method: method ?? method,
+        body: data,
+    })
+
+    const JsonResponse = await request.json()
+    return JsonResponse
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+        'year': '2022',
+        'page': '0'
+    }, '{{ csrf_token }}')
+})
+
 const labels = [
     'Janvier',
     'Fevrier',
