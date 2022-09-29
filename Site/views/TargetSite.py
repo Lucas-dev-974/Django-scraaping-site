@@ -8,7 +8,7 @@ from Site.models import Target_Site
 from Site.Formulaires import *
 from Site.utils import *
 from django.http import JsonResponse
-from Site.ScrapCore import *
+from Site.ScrapCore.forum_scrapper import run
 
 # from Site.ScrapCore import 
 @login_required

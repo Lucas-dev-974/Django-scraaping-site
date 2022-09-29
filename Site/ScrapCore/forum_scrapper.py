@@ -22,17 +22,19 @@ currentPagePath   = urlparse(URL).path
 
 compteur = 0
 
+def run():
+    while  compteur != 1:
+        threads = []
+        print('\niteration: ', compteur, ' ', currentPagePath)
+        currentPage   = fn.getPage(domain, currentPagePath)
+        
+        threads.append(fn.getPostsFromPage(currentPage)['threads'])
 
-while  compteur != 1:
-    threads = []
-    print('\niteration: ', compteur, ' ', currentPagePath)
-    currentPage   = fn.getPage(domain, currentPagePath)
-    
-    threads.append(fn.getPostsFromPage(currentPage)['threads'])
+        currentPagePath   = urlparse(fn.getNextPageUrl(currentPage)).path
+        compteur = compteur + 1
+        all_threads.append(threads)
 
-    currentPagePath   = urlparse(fn.getNextPageUrl(currentPage)).path
-    compteur = compteur + 1
-    all_threads.append(threads)
+
 
 print("the scrapping task is finished")
 """
