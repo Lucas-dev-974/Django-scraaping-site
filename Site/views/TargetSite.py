@@ -1,4 +1,3 @@
-from calendar import month
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -144,30 +143,12 @@ def Releve(request, siteid):
     })
 
 @login_required
-def Scrapper(request):
-    compteur = 0
+def Scrapper(request, siteid):
     threads = {
         't1': 'test',
         't2': 'test2'
     }
-    return JsonResponse({
-        'test': threads
-    })
+    test = json.dumps(threads)
 
-"""     while  compteur != 1:
-        threads = []
-        print('\niteration: ', compteur, ' ', forum_scrapper.currentPagePath)
-
-        currentPage   = fn.getPage(domain, currentPagePath)
-
-        threads.append(fn.getPostsFromPage(currentPage)['threads'])
-
-        currentPagePath   = urlparse(fn.getNextPageUrl(currentPage)).path
-
-        compteur = compteur + 1
-
-        all_threads.append(threads)
-
-    print("the scrapping task is finished") """
-
+    return JsonResponse({'test': 'test'})
     
