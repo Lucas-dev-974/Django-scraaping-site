@@ -1,0 +1,20 @@
+
+{% block content %}
+<nav  class="navbar navbar-dark h-25">                
+    <h1 class="mx-3 text-light">
+        <a href="/" id="enterprise-name-navbar">Telefonica</a>
+    </h1> 
+
+    {% if request.path != '/login' and request.path != '/register' %}
+        {% if request.user.is_authenticated %}
+            <a href="/logout" class="mx-3 btn btn-outline-light">
+                DECONNEXION
+            </a>
+        {% else %}
+            <a href="/login" class="mx-3 btn btn-outline-light">
+                CONNEXION
+            </a>
+        {% endif %}    
+    {% endif %}
+</nav>
+{% endblock content %}

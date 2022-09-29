@@ -18,26 +18,26 @@ def getPostsFromPage(pageContent):
     # print(pageContent)
     # On récupere tout les poste via le tag: article et la class: custom-message-tile 
     thread_results = pageContent.find_all("article", class_="custom-message-tile") #piege ici
-
+    print(len(thread_results))
     # boucle sur les article récuperer
     iteration = 0
     # for thread in thread_results:
-    while iteration != 2:
-        first_element = thread_results[iteration].find("div") # get first children - the div
-        link          = first_element.find("a")
+    # while iteration != 2:
+    #     first_element = thread_results[iteration].find("div") # get first children - the div
+    #     link          = first_element.find("a")
         
-        title = link["title"] # get the title and save it 
-        url   = link["href"] # get the link towards the post of the thread 
-        domain = pageContent.find('meta', property='og:site_name')['content']
+    #     title = link["title"] # get the title and save it 
+    #     url   = link["href"] # get the link towards the post of the thread 
+    #     domain = pageContent.find('meta', property='og:site_name')['content']
         
-        threads.append(getParsedauthorThreadsAndReplys(title, domain, url)) 
-        iteration += 1
+    #     threads.append(getParsedauthorThreadsAndReplys(title, domain, url)) 
+    #     iteration += 1
 
-    datas = {
-        'threads': threads,
-        'nb_of_scrapp': iteration
-    }
-    return datas
+    # datas = {
+    #     'threads': threads,
+    #     'nb_of_scrapp': iteration
+    # }
+    # return datas
 
 def getNextPageUrl(page):
     page_navigation_component = page.find(class_ = "lia-paging-pager")

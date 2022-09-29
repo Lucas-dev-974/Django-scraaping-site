@@ -1,12 +1,9 @@
-from asyncio.windows_events import NULL
 from datetime import date, datetime
 import requests
 import Site.ScrapCore.functions as fn
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from Site.ScrapCore.dtb import dtb
-
-from .Scrapper import Scrapper
 
 db = dtb()
 
@@ -26,9 +23,7 @@ currentPagePath   = urlparse(URL).path
 compteur = 0
 
 
-
-#TODO mettre cette boucle dans une fonction pour l'appeler avec les boutons scrap
-"""while  compteur != 1:
+while  compteur != 1:
     threads = []
     print('\niteration: ', compteur, ' ', currentPagePath)
     currentPage   = fn.getPage(domain, currentPagePath)
@@ -39,9 +34,8 @@ compteur = 0
     compteur = compteur + 1
     all_threads.append(threads)
 
-print("the scrapping task is finished")"""
-
-
+print("the scrapping task is finished")
+"""
 
 def saveThread(thread, is_reply=False):
     
@@ -88,12 +82,12 @@ def saveThread(thread, is_reply=False):
         
     # })
 
-"""jsonThread = fn.JsonEncoder(all_threads)
+"""
+jsonThread = fn.JsonEncoder(all_threads)
 
 decodedJsonThreadsPerPage = fn.JsonDecode(jsonThread)[0] # Get the first page
 # print(decodedJsonThreadsPerPage)
 for page in decodedJsonThreadsPerPage:
     print('\n')
     for thread in page:
-        saveThread(thread)"""
-
+        saveThread(thread)

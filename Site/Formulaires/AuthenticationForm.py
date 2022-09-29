@@ -57,7 +57,8 @@ class LoginForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'username_input'
             }
         )
     )
@@ -67,7 +68,8 @@ class LoginForm(forms.Form):
         required=True,
         widget = forms.PasswordInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'password_input'
             }
         ), 
     )

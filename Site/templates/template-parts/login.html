@@ -1,53 +1,30 @@
 {% extends '../index.html' %}
 
 {% block content %}
-    <div class="container full-height">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ login_form.as_p }}
-
-            <input type="submit" value="S'enregistrer">
-        </form>
-    </div>
-{% endblock content %}
-
-{% comment %} {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-2"></div>
-        <div class="col-lg-6 col-md-8 login-box">
-            <div class="col-lg-12 login-key">
-                <i class="fa fa-key" aria-hidden="true"></i>
-            </div>
-            <div class="col-lg-12 login-title">
-                LOGIN PANEL
+    <div class="container d-flex full-height justify-content-center align-items-center">
+        <div class="card dark">
+            <div class="card-header">
+                <p class="card-title text-center fs-4">Connexion</p>
             </div>
 
-            <div class="col-lg-12 login-form">
-                <div class="col-lg-12 login-form">
-                    <form>
-                        <div class="form-group">
-                            <label class="form-control-label">USERNAME</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label">PASSWORD</label>
-                            <input type="password" class="form-control" i>
-                        </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="form-floating">
+                        {{ login_form.username }}
+                        <label class="form-label" for="{{login_form.username.id }}">{{ login_form.username.label }}</label>
+                    </div>
 
-                        <div class="col-lg-12 loginbttm">
-                            <div class="col-lg-6 login-btm login-text">
-                                <!-- Error Message -->
-                            </div>
-                            <div class="col-lg-7 login-btm login-button">
-                                <button type="submit" class="btn btn-outline-primary">LOGIN</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-floating my-3">
+                        {{ login_form.password }}
+                        <label class="form-label" for="{{ form_login.password.id }}">{{ form_login.password.label}}</label>
+                    </div>
+
+                    <div class="container d-flex justify-content-center my-2">
+                        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    </div>
+                </form>
             </div>
-            <div class="col-lg-3 col-md-2"></div>
         </div>
     </div>
-{% endblock content %} {% endcomment %}
-
+{% endblock content %}

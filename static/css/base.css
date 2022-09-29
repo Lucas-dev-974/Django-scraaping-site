@@ -1,0 +1,9 @@
+.full-height{
+    height: calc(100vh - 72px);
+}
+
+.navbar h1 a#enterprise-name-navbar{
+    text-decoration: none;
+    color: white;
+    
+}

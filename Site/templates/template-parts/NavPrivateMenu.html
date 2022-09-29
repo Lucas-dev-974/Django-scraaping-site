@@ -2,38 +2,44 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/NavMenu.css' %}"/>
 </head>
-<ul class="navigation">
-    <li>
-        <a href="/private/tg-site/1">
-            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-            <span class="text">Accueil</span>
-        </a>
-    </li>
-    <li>
-        <a href="/private/history">
-            <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
-            <span class="text">Historique</span>
-        </a>
-    </li>
-    <li>
-        <a href="/private/graph">
-            <span class="icon"><ion-icon name="stats-chart-outline"></ion-icon></span>
-            <span class="text">Graphique</span>
-        </a>
-    </li>
-    <li>
-        <a href="/private/relevee/{{site_id}}">
-            <span class="icon"><ion-icon name="code-working-outline"></ion-icon></span>
-            <span class="text">Scrap</span>
-        </a>
-    </li>
-    <li>
-        <a href="#">
-            <span class="icon"><ion-icon name="newspaper-outline"></ion-icon></span>
-            <span class="text">Last</span>
-        </a>
-    </li>
-</ul>
+
+{% if  request.user.is_authenticated %}
+
+    <ul class="navigation">
+        <li>
+            <a href="/private/tg-site/1">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="text">Accueil</span>
+            </a>
+        </li>
+        <li>
+            <a href="/private/history">
+                <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
+                <span class="text">Historique</span>
+            </a>
+        </li>
+        <li>
+            <a href="/private/graph">
+                <span class="icon"><ion-icon name="stats-chart-outline"></ion-icon></span>
+                <span class="text">Graphique</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon"><ion-icon name="code-working-outline"></ion-icon></span>
+                <span class="text">Scrap</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon"><ion-icon name="newspaper-outline"></ion-icon></span>
+                <span class="text">Last</span>
+            </a>
+        </li>
+    </ul>
+
+{% endif %}
+
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
