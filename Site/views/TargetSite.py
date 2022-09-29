@@ -4,10 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from Site.Formulaires import *
+from Site.SerializedModel import ThreadsSerializer
 from Site.models import Target_Site
 from Site.Formulaires import *
 from Site.utils import *
 from django.http import JsonResponse
+from django.core import serializers
 
 @login_required
 def private(request):   
@@ -117,8 +119,10 @@ def TGS_graph_api(request):
         date1 = year + '-' + between_month[0] + '-01'
         date2 = year + '-' + between_month[1] + '-01'
 
-        threads = getThreadsBetweenDate(date1, date2)
+        threads = getTotalScrapByMonthBetweenDate(date1, date2)
         
+        
+
     return JsonResponse({
         'history': threads
     })
