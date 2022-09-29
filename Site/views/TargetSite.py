@@ -4,13 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from Site.Formulaires import *
-from Site.SerializedModel import ThreadsSerializer
 from Site.models import Target_Site
 from Site.Formulaires import *
 from Site.utils import *
 from django.http import JsonResponse
-from django.core import serializers
-
+# from Site.ScrapCore import 
 @login_required
 def private(request):   
     errors = []
@@ -71,6 +69,7 @@ def TGSite(request, id):
         # thread['replys'] = thread.replys()
 
     return render(request, 'template-parts/TargetSite.html', {
+        'site_id': tg_site.id,
         'site_name': tg_site.name,
         'site_url_to_scrapp':  tg_site.url_to_scrapp
     })
@@ -121,7 +120,7 @@ def TGS_graph_api(request):
 
         threads = getTotalScrapByMonthBetweenDate(date1, date2)
         
-        
+            
 
     return JsonResponse({
         'history': threads
@@ -136,7 +135,7 @@ def TGS_Graph(request):
 def Releve(request, siteid):
     site = Target_Site.objects.get(pk = siteid)
 
-    return render(request, 'template-parts/scrap.html', {
+    return render(request, 'template-parts/relevee.html', {
         'site': {
             'id': site.id,
             'name': site.name,
