@@ -1,0 +1,9 @@
+{
+    "pointer": {
+        "<article>.custom-message-tile": {
+            "name": "THREAD",
+            "threadLink": "div>a",
+            "threadTitle": "_threadLink['title']"
+        }
+    }
+}
