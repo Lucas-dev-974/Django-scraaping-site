@@ -8,6 +8,8 @@ from Site.models import Target_Site
 from Site.Formulaires import *
 from Site.utils import *
 from django.http import JsonResponse
+from Site.ScrapCore import *
+
 # from Site.ScrapCore import 
 @login_required
 def private(request):   
@@ -119,8 +121,6 @@ def TGS_graph_api(request):
         date2 = year + '-' + between_month[1] + '-01'
 
         threads = getTotalScrapByMonthBetweenDate(date1, date2)
-        
-            
 
     return JsonResponse({
         'history': threads
@@ -142,3 +142,32 @@ def Releve(request, siteid):
             'url_to_scrapp': site.url_to_scrapp
         }
     })
+
+@login_required
+def Scrapper(request):
+    compteur = 0
+    threads = {
+        't1': 'test',
+        't2': 'test2'
+    }
+    return JsonResponse({
+        'test': threads
+    })
+
+"""     while  compteur != 1:
+        threads = []
+        print('\niteration: ', compteur, ' ', forum_scrapper.currentPagePath)
+
+        currentPage   = fn.getPage(domain, currentPagePath)
+
+        threads.append(fn.getPostsFromPage(currentPage)['threads'])
+
+        currentPagePath   = urlparse(fn.getNextPageUrl(currentPage)).path
+
+        compteur = compteur + 1
+
+        all_threads.append(threads)
+
+    print("the scrapping task is finished") """
+
+    

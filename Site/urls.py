@@ -15,7 +15,7 @@ urlpatterns = [
         path('graph/api',    TGS_graph_api), 
         path('relevee/', include([
             path('<int:siteid>',    Releve, name='relevee'), 
-            path('scrap/start/<int:siteid>', Releve)
+            path('scrap/start/<int:siteid>', Scrapper)
         ]))
     ])),
 ]

@@ -17,20 +17,55 @@
         </div>
         <div class="w-100"></div>
         <div class="col text-light">
-            <h3>Zone affichage relevee scrap</h3
-                
+            <h3>Zone affichage relevee scrap</h3>
         </div>
     </div>
 
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', ()=>{
+        async function getScrapData(url=null, method='POST', params=null, csrfToken=false){
+            const data = new FormData()
+            
+            if(params != null){
+                
+                try{
+                    checker = JSON.stringify(params)
+                    Object.entries(params).forEach(param => {
+                        data.append(param[0], param[1])
+                    });
+    
+                }catch(error){
+
+                    console.log(error);
+                    alert('Désoler une erreur est survenue veuillez recharger la page !')
+                }
+            }   
+    
+            if(csrfToken) data.append('csrfmiddlewaretoken', csrfToken)
+            const request = await window.fetch(url, {
+                method: method ?? method,
+                body: data,
+            })
+            console.log(request)
+            //const JsonResponse = await request.json()
+            //!!!!CRASH!!!!
+            //console.log(JsonResponse);
+            // return request
+        }
+    
+
+        document.addEventListener('DOMContentLoaded', async =>{
             const start_scrap_btn = document.getElementById('start_scrap_btn')
             start_scrap_btn.onclick = () => {
                 
+                let response = getScrapData('http://127.0.0.1:8000/private/relevee/1', method='POST', params={
+                    't': '123',
+                    'x': '321'
+                }, '{{ csrf_token }}')
             }
         })
     </script>
+
     {% include './NavPrivateMenu.html' %}
 {% endblock content %}
