@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from datetime import date, datetime
 import requests
 import functions as fn
@@ -5,9 +6,10 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from dtb import dtb
 
+from .Scrapper import Scrapper
+
 db = dtb()
 
-print(db.getTables())
 
 URL = "https://community.o2.co.uk/t5/Discussions-Feedback/bd-p/4"
 domain = urlparse(URL).netloc
@@ -22,6 +24,9 @@ currentPagePath   = urlparse(URL).path
 
 
 compteur = 0
+
+
+
 
 
 while  compteur != 1:
