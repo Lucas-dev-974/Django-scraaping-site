@@ -20,6 +20,10 @@ class Threads(models.Model):
         replys = Threads_Replys.objects.filter(thread_id = self.id)
         return replys
 
+    def totalReplys(self):
+        TotalReplys = Threads_Replys.objects.filter(thread_id = self.id).count()
+        return TotalReplys
+
     # def getBetweenDate(self, date1 = None, date2 = None):
     #     threads = Threads.objects.raw('SELECT * FROM "Site_threads" WHERE publication_date BETWEEN ' + str(date1) + ' AND ' + str(date2)).all()
     #     return threads
@@ -45,7 +49,9 @@ def getTotalScrapByMonthBetweenDate(date1 = None, date2 = None):
 
     oldestDate = min([dateFormat1, dateFormat2])
     month_list = [i.strftime("%b:%Y-%m") for i in pd.date_range(start=date1, end=date2, freq='MS')]
-    print(month_list)
+
+    # print(month_list)
+    
     months = {}
 
     for data_date in month_list:
@@ -62,6 +68,7 @@ def getTotalScrapByMonthBetweenDate(date1 = None, date2 = None):
             'total_scrapped_threads': scrapped_thread_nu
         }
 
+    print(months)
 
     return months
 
