@@ -3,19 +3,17 @@
 {% block content %}
 
 <div class="container bg-dark mt-4 w-50">
-    <canvas id="myChart" ></canvas>
-</div>
-<div class="h-100 d-flex align-items-center justify-content-center">
-    <button type="button" class="btn btn-outline-light mx-auto">< Précédent</button>
-    <button type="button" class="btn btn-outline-light mx-auto">Suivant ></button>
+    <canvas id="chart-canvas" ></canvas>
+
+    <div class="w-50 d-flex justify-content-center mx-auto my-3">
+        <button type="button" class="btn btn-outline-light mx-auto">< Précédent</button>
+        <button type="button" class="btn btn-outline-light mx-auto">Suivant ></button>
+    </div>
 </div>
 
-<button id="btn-1">
-    teste
-</button>
 <script>
 
-    async function getGraphData(url=null, method='POST', params=null, csrfToken=false){
+    async function ApiRequest(url=null, method='POST', params=null, csrfToken=false){
         const data = new FormData()
 
         if(params != null){
@@ -39,25 +37,57 @@
         })
         
         const JsonResponse = await request.json()
-        console.log(JsonResponse);
-        // return request
+        return JsonResponse
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
-        let response = getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
+        let response = await ApiRequest('http://127.0.0.1:8000/private/graph/api', method='POST', params={
             'year': '2022',
             'page': '0'
         }, '{{ csrf_token }}')
+        console.log(response)
+        
+        let labels = Object.keys(response.history)
+        _data = []
 
-
-        const btn = document.getElementById('btn-1')
-        btn.addEventListener('click', ()  => {
-            const response =  getGraphData('http://127.0.0.1:8000/private/graph/api', method='POST', params={
-                'year': '2022',
-                'page': '0'
-            }, '{{ csrf_token }}')
+        Object.values(response.history).forEach(value => {
+            _data.push(value.total_scrapped_threads)
         })
+        
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Totals scraps',
+                    backgroundColor: 'rgba(99, 198, 255, 0.2)',
+                    borderColor: 'rgba(99, 190, 255,1)',
+                    borderWidth: 2,
+                    hoverBackgroundColor: "rgba(99, 167, 255, 0.4)",
+                    hoverBorderColor: "rgba(78, 124, 199, 1)",
+                    data: _data
+                },
+            ]
+        }
 
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Données scrappées pour x(mois) de x(années)'
+                    }
+                }
+            }
+        };
+        
+        console.log(Object.values(response.history))
+        const myChart = new Chart(document.getElementById('chart-canvas'),config)
+        
     })
 
 </script>
