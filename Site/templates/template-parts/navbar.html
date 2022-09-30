@@ -9,20 +9,19 @@
     
 
     {% if request.path != '/login' and request.path != '/register' %}
-        {% if request.user.is_authenticated %}
-        <div class="container">    
-            <a href="/private" class="btn btn-outline-light">
-                Choix du site
-            </a>
-            <a href="/logout" class="mx-3 btn btn-outline-light">
-                DECONNEXION
-            </a>
+        <div class="d-flex justify-content-arround">    
+            {% if request.user.is_authenticated %}
+                
+                    <a href="/logout" class="mx-3 btn btn-outline-light">
+                        DECONNEXION
+                    </a>
+            
+            {% else %}
+                <a href="/login" class="mx-3 btn btn-outline-light">
+                    CONNEXION
+                </a>
+            {% endif %}    
         </div>
-        {% else %}
-            <a href="/login" class="mx-3 btn btn-outline-light">
-                CONNEXION
-            </a>
-        {% endif %}    
     {% endif %}
 </nav>
 {% endblock content %}
