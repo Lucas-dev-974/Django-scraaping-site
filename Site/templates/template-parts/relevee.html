@@ -3,21 +3,22 @@
 
 {% block content %}
     
-    <div class="container-fluid">
-        <div class="col">
-            <div class="btn" style="color: white;">
-                <button id="start_scrap_btn">
-                    start scrap
-                </button>
-            </div>
-            <div class="text-light">
-                <h3>ETA</h3>
-            </div>
+    <div class="container-fluid w-75 h-100 d-flex flex-row">
+        
+        <div class="col d-flex flex-column w-25 m-0">
+            <button class="row btn btn-outline-success w-75 py-5 m-5" id="start_scrap_btn">
+                Commencer le SCRAP
+            </button>
+            <div class="text-light border border-light w-75 p-5 m-5">
+                <h3>Statut</h3>
+                </div>
         </div>
-        <div class="w-100"></div>
-        <div class="col text-light">
-            <h3>Zone affichage relevee scrap</h3>
+        <div class="col text-light w-50 h-cover border border-light m-2" style="height: 63vh;">
+            <h3 class="text-center p-3">Zone d'affichage du scrap</h3>
+            {% comment %} ajouter les data du scrap avec un JSON  {% endcomment %} 
         </div>
+        
+        
     </div>
 
 
@@ -50,14 +51,16 @@
 
             let json = await request.json()
 
+
+
             console.log(json);
+
             // console.log(request)
             // console.log(typeof(data))
             
             // request.json().then(data => {
             //     console.log(data)
             // })
-            //!!!!CRASH!!!!
             //console.log(JsonResponse);
             // return request
         }
@@ -67,10 +70,7 @@
             const start_scrap_btn = document.getElementById('start_scrap_btn')
             start_scrap_btn.onclick = () => {
                 
-                let response = getScrapData('http://127.0.0.1:8000/private/relevee/scrap/start/1', method='POST', params={
-                    't': '123',
-                    'x': '321'
-                }, '{{ csrf_token }}')
+                let response = getScrapData('http://127.0.0.1:8000/private/relevee/scrap/start/1', method='POST', params={}, '{{ csrf_token }}')
             }
         })
     </script>

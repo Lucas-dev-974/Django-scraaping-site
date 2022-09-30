@@ -3,7 +3,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/NavMenu.css' %}"/>
 </head>
 
-{% if  request.user.is_authenticated %}
+{% if  request.user.is_authenticated and request.path != '/' and request.path != '/private/' %}
 
     <ul class="navigation">
         <li>
@@ -25,7 +25,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/private/relevee/1">
                 <span class="icon"><ion-icon name="code-working-outline"></ion-icon></span>
                 <span class="text">Scrap</span>
             </a>
