@@ -11,7 +11,7 @@
                         {% csrf_token %}
                         <a href="/private/tg-site/{{site.id}}"><li class="list-group-item">{{site.name}}</li></a>
                         <input type="text" hidden name="tgsite_id" value="{{site.id}}">
-                        <button type="submit" name="delete_tgsite">delete</button>       
+                        {% comment %} <button type="submit" name="delete_tgsite">delete</button>     {% endcomment %}   
                     </form>
                 {% endfor %}             
 
