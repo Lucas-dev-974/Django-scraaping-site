@@ -35,8 +35,17 @@ class Threads_Replys(models.Model):
     publication_date = models.DateTimeField()
     scrapped_date    = models.DateTimeField()
 
+
+class History(models.Model):
+    target_site = models.ForeignKey(Target_Site, on_delete = models.CASCADE)
+    author = models.CharField(max_length=75)
+    content = models.TextField()
+    publication_date = models.DateTimeField()
+    scrapped_date    = models.DateTimeField()
+
+
+
 def getNumberOfThreadForDate(year, month):
-    # threads = Threads.objects.raw('SELECT * FROM "Site_threads" WHERE SUBSTR(publication_date, 1, 7) = %s', [date]).columns.count(1)
     threads = Threads.objects.filter(publication_date__year = year, publication_date__month = month)
     return threads
 
