@@ -1,12 +1,49 @@
-from io import StringIO
-import json
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlunparse
-import datetime
+from Site.models import Threads,Threads_Replys, History
+from .dtb import dtb
 
+
+def SaveInHistory(thread):
+    history_item = History.objects.create(
+        target_site_id = 1  ,
+        author = thread['author'],
+        content = thread['content'],
+        publication_date = thread['publication_date'],
+        scrapped_date = thread['scrapped_date']
+    )
+
+    return history_item
+
+def saveThread(thread, tgsite_id):
+    thread_ = Threads.objects.create(
+        target_id_id=1, 
+        title = thread['title'],
+        author = thread['author'],
+        publication_date = thread['publication_date'],
+        scrapped_date = thread['scrapped_date'],
+        content = thread['content'],
+        number_of_replys = thread['number_of_replys']
+    )
+
+    return thread_
+
+def saveThreadReplys(thread, thread_id):
+    thread_ = Threads.objects.create(
+        thread_id = thread_id, 
+        # title = thread['title'],
+        author = thread['author'],
+        publication_date = thread['publication_date'],
+        scrapped_date = thread['scrapped_date'],
+        content = thread['content']
+    )
+
+    return thread_
 
 def getPage(domain, url_path):
+    # print('site id: -- ', siteid)
     page_url = urlunparse(('https', domain, url_path, "", "", "")) # construct the url to access the posts for each thread
     page = requests.get(page_url)
     souped_page = BeautifulSoup(page._content, "html.parser")
@@ -18,28 +55,23 @@ def getPostsFromPage(pageContent):
     # print(pageContent)
     # On récupere tout les poste via le tag: article et la class: custom-message-tile 
     thread_results = pageContent.find_all("article", class_="custom-message-tile") #piege ici
-    #print(len(thread_results))
 
-    return thread_results
     # boucle sur les article récuperer
     iteration = 0
     # for thread in thread_results:
-    # while iteration != 2:
-    #     first_element = thread_results[iteration].find("div") # get first children - the div
-    #     link          = first_element.find("a")
+    while iteration != 2:
+        first_element = thread_results[iteration].find("div") # get first children - the div
+        link          = first_element.find("a")
         
-    #     title = link["title"] # get the title and save it 
-    #     url   = link["href"] # get the link towards the post of the thread 
-    #     domain = pageContent.find('meta', property='og:site_name')['content']
+        title = link["title"] # get the title and save it 
+        url   = link["href"] # get the link towards the post of the thread 
+    
+        domain = pageContent.find('meta', property='og:site_name')['content']
         
-    #     threads.append(getParsedauthorThreadsAndReplys(title, domain, url)) 
-    #     iteration += 1
+        threads.append(getParsedThreadsAndReplys(title, domain, url)) 
+        iteration += 1
 
-    # datas = {
-    #     'threads': threads,
-    #     'nb_of_scrapp': iteration
-    # }
-    # return datas
+    return threads
 
 def getNextPageUrl(page):
     page_navigation_component = page.find(class_ = "lia-paging-pager")
@@ -59,18 +91,20 @@ def getNextPageUrl(page):
     
     return next_page_url
     
-def getParsedauthorThreadsAndReplys(thread_title, thread_domain, thread_path):
-    print('get-thread: ', thread_title)
+def getParsedThreadsAndReplys(thread_title, thread_domain, thread_path):
+    
+    # Define parsed Thread object
     thread_datas = {
         'title': thread_title,
         'content': '',
         'author':  '',
         'replys': [],
-        'scrapped_date': datetime.datetime.now(),
+        'link': thread_domain + thread_path,
+        'scrapped_date': datetime.now(),
         'publication_date': ''
     }
 
-    thread_datas['scrapped_date'] = thread_datas['scrapped_date'].strftime('%x') + '-' + thread_datas['scrapped_date'].strftime('%X')
+    
     # Firstly we get the page of the thread
     soup_thread_page = getPage(thread_domain, thread_path)
     thread_datas['author'] = soup_thread_page.find(class_ = 'UserName').find('a').get_text()
@@ -87,52 +121,82 @@ def getParsedauthorThreadsAndReplys(thread_title, thread_domain, thread_path):
 
     # Parse to string the content of the thread
     thread_datas['content'] = content.get_text()
-    thread_datas['publication_date'] = StarterThread.find(class_ = 'local-date').getText()
-
+    
     # Here we get replys of the thread
-    thread_datas['replys'] = getReplyOfThread(soup_thread_page)
+    
 
+    # get html publication date and convert it to datetime Y-m-d
+    pb_date_str = StarterThread.find(class_ = 'DateTime lia-message-posted-on lia-component-common-widget-date').find('span', class_ = 'local-date').text
+    pb_date     = pb_date_str.split('-')
+    pb_date[0] = pb_date[0][1:3]
+    pb_converted_to_datetime = datetime(int(pb_date[2]), int(pb_date[1]), int(pb_date[0]))
+    thread_datas['publication_date'] = pb_converted_to_datetime
+
+    # Get replys and save them
+    
+    thread_datas['number_of_replys'] = len(thread_datas['replys'])
+    # # Save thread in database get id of Thread
+    # thread_id = dtb().insert('Site_threads', {
+    #         'target_id_id': 1,
+    #         'title': thread_datas['title'],
+    #         'number_of_replys': 0,
+    #         'author':  thread_datas['author'],
+    #         'content': thread_datas['content'],
+    #         'publication_date': pb_converted_to_datetime,
+    #         'scrapped_date': thread_datas['scrapped_date'],
+    #         'link': thread_datas['link']
+    #     })
+
+    # Here define the thread id just created and then get and save all replys
+
+    thr = saveThread(thread=thread_datas, tgsite_id=1)
+    thread_datas['id'] = thr.id
+    thread_datas['replys'] = getReplyOfThread(soup_thread_page, thread_datas)   
+    # print
+    SaveInHistory(thread_datas)
     return thread_datas
 
-def getReplyOfThread(thread_page):
-    
-    """replysComponents  = thread_page.find_all(class_ = 'lia-thread-reply')
-    print(len(replysComponents))"""
-    #Recupere la balise qui contient le nombre de reponse sous un post
-    replysCounter = thread_page.find(class_ ='custom-tile-replies')
-    txt = replysCounter.find('b').getText()
-    return txt
-
-    
-"""
+def getReplyOfThread(thread_page, parent):
+    replysComponents  = thread_page.find_all(class_ = 'lia-thread-reply')
     _replys = [] # Parsed replys
 
-     Todo Remove Limit
-     Limit of thread to get
+    # Todo Remove Limit
+    # Limit of thread to get
     blockage = len(replysComponents)
     if(blockage > 1):
         blockage = 3
-        
+    
     iteration = 0
     while iteration != blockage - 1:
+        # Get Author
         author  = replysComponents[iteration].find(class_ = 'lia-user-name-link').get_text()
-        print('get-replys from author: ', author)
+
+        # Get html and convert publication date html as datetime
+        pb_date_str = replysComponents[iteration].find(class_ = 'DateTime lia-message-posted-on lia-component-common-widget-date').find('span', class_ = 'local-date').text
+        pb_date     = pb_date_str.split('-')
+        pb_date[0] = pb_date[0][1:3]
+        pb_converted_to_datetime = datetime(int(pb_date[2]), int(pb_date[1]), int(pb_date[0]))
+
+        # Get Content
         content = replysComponents[iteration].find(class_ = 'lia-message-body-content').get_text()
-        pb_date = replysComponents[iteration].find(class_ = 'local-date').getText()
         _replys.append({
-            'author': author, 
+            'author': author,
             'content': content,
-            'scrapped_date': datetime.datetime.now().strftime('%x' + '-' + '%X'),
-            'publication_date': pb_date
+            'publication_date': pb_converted_to_datetime,
+            'scrapped_date': parent['scrapped_date'],
+            'link': parent['link'],
+            'thread_id': parent['id']
         })
-        iteration += 1 
+
+        # thread_id = dtb().insert('Site_threads_replys', {
+        #     'thread_id': parent['id'],
+        #     'author':  author,
+        #     'content': content,
+        #     'publication_date': pb_converted_to_datetime,
+        #     'scrapped_date': datetime.now(),
+        #     'link': parent['link']
+        # })
+        
+        iteration += 1
     
     return _replys
-"""
-
-def JsonEncoder(json_to_encode):
-    return json.dumps(json_to_encode, indent=2, sort_keys=True)
-
-def JsonDecode(json_to_decode):
-    io = StringIO(json_to_decode)
-    return json.load(io)
