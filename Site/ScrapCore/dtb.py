@@ -1,10 +1,10 @@
 import sqlite3
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from os.path import exists
 import os
 
 # Here get the .env file config
-load_dotenv()
+# load_dotenv()
 
 # Création d'un singleton pour gerer la connexion à la base de données
 class Singleton(type):
