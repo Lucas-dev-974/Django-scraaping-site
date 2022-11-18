@@ -1,6 +1,6 @@
 db.sqlite3
 .venv/Lib
-
+venv/
 # Cache
 scrapping_site/__pycache__
 Site/__pycache__

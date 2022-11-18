@@ -4,8 +4,14 @@ Scrapping-site à pour but de délivrer une interface web avec système de conne
 
 # Prérequis 
  - Python 
- - Django
 
+# Dépendance dans le venv
+  - django
+  - pandas
+  - mysqlclient
+  - requests
+  - bs4 (beautifulsoup)
+  - 
 # Installation 
   - git clone https://github.com/Lucas-dev-974/Django-scraaping-site.git
 
